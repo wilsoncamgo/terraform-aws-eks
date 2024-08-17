@@ -82,12 +82,12 @@ module "eks" {
 
   eks_managed_node_groups = {
     karpenter = {
-      ami_type       = "AL2023_x86_64_STANDARD"
-      instance_types = ["m5.large"]
+      ami_type       = "AL2_ARM_64"
+      instance_types = ["t4g.medium"]
 
-      min_size     = 2
+      min_size     = 1
       max_size     = 3
-      desired_size = 2
+      desired_size = 1
 
       taints = {
         # This Taint aims to keep just EKS Addons and Karpenter running on this MNG
@@ -208,16 +208,16 @@ resource "kubectl_manifest" "karpenter_node_pool" {
           requirements:
             - key: "karpenter.k8s.aws/instance-category"
               operator: In
-              values: ["c", "m", "r"]
+              values: ["t"]
             - key: "karpenter.k8s.aws/instance-cpu"
               operator: In
-              values: ["4", "8", "16", "32"]
+              values: ["2"]
             - key: "karpenter.k8s.aws/instance-hypervisor"
               operator: In
               values: ["nitro"]
             - key: "karpenter.k8s.aws/instance-generation"
               operator: Gt
-              values: ["2"]
+              values: ["4"]
       limits:
         cpu: 1000
       disruption:
