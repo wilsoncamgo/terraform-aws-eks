@@ -5,6 +5,9 @@ module "eks_al2023" {
   cluster_name    = "${local.name}-al2023"
   cluster_version = "1.30"
 
+  enable_cluster_creator_admin_permissions = true
+  cluster_endpoint_public_access           = true
+
   # EKS Addons
   cluster_addons = {
     coredns                = {}
@@ -17,15 +20,16 @@ module "eks_al2023" {
   subnet_ids = module.vpc.private_subnets
 
   eks_managed_node_groups = {
-    example = {
+    wordpress = {
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
-      instance_types = ["m6i.large"]
+      ami_type       = "AL2023_ARM_64_STANDARD"
+      instance_types = ["t4g.large"]
 
-      min_size = 2
+      min_size = 1
       max_size = 5
       # This value is ignored after the initial creation
       # https://github.com/bryantbiggs/eks-desired-size-hack
-      desired_size = 2
+      desired_size = 1
 
       # This is not required - demonstrates how to pass additional configuration to nodeadm
       # Ref https://awslabs.github.io/amazon-eks-ami/nodeadm/doc/api/
