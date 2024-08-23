@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: php-ini
+  namespace: default
+  labels:
+    app.kubernetes.io/name: wordpress
+data:
+  php-custom.ini: |
+    upload_max_filesize = 256M
+    post_max_size = 256M
+    max_execution_time = 360
+    max_input_time = 360
+    memory_limit = 256M
