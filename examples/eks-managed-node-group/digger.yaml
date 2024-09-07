@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: perm
+spec:
+  securityContext:
+    fsGroup: 1000
+    fsGroupChangePolicy: Always
+  containers:
+  - name: app1
+    image: alpine:latest
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 3000"]
+    securityContext:
+      runAsUser: 1000
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - mountPath: /var/www
+      name: prestashop-data
+  volumes:
+  - name: prestashop-data
+    persistentVolumeClaim:
+      claimName: prestashop-durocolor-pvc

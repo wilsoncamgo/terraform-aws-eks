@@ -78,13 +78,14 @@ module "eks" {
   eks_managed_node_groups = {
     karpenter = {
       # Starting on 1.30, AL2023 is the default AMI type for EKS managed node groups
-      instance_types = ["t2.medium"]
+      instance_types = ["t3.small"]
 
       min_size = 1
-      max_size = 7
+      max_size = 10
       # This value is ignored after the initial creation
       # https://github.com/bryantbiggs/eks-desired-size-hack
-      desired_size = 2
+      desired_size = 1
+      maxPodsPerNode: 30
     }
   }
   node_security_group_tags = merge(local.tags, {
@@ -194,7 +195,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
               operator: In
               values: ["medium", "small", "micro"]
       limits:
-        cpu: 3000
+        cpu: 7000
       disruption:
         consolidationPolicy: WhenEmpty
         consolidateAfter: 30s
