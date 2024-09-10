@@ -7,6 +7,8 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/7a6e7cc5-6ec6-41e0-b16b-2ea211c5b528
 spec:
   rules:
     - host: durocolor.com.co
