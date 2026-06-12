@@ -42,7 +42,19 @@ spec:
   - host: apiflows.inncrea.co
     http:
       paths:
-      - path: /
+      # Locked down to the REST API only. Flow data_exchange callbacks enter via
+      # router.innchat.co/flows/<slug> (innChatRouter proxy), not directly.
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: innchat-studio-backend-svc
+            port:
+              number: 80
+      # Public short-link redirector for Meta template URL buttons (live since
+      # 2026-06-05, backend/src/routes/redirect.routes.js). Do NOT remove —
+      # every /r/<code> in approved WhatsApp templates dies without it.
+      - path: /r
         pathType: Prefix
         backend:
           service:
@@ -122,7 +134,21 @@ spec:
   - host: router.inncrea.co
     http:
       paths:
-      - path: /
+      - path: /webhooks/meta
+        pathType: Prefix
+        backend:
+          service:
+            name: innchat-router-api
+            port:
+              number: 3500
+      - path: /flows
+        pathType: Prefix
+        backend:
+          service:
+            name: innchat-router-api
+            port:
+              number: 3500
+      - path: /signup/embedded
         pathType: Prefix
         backend:
           service:
