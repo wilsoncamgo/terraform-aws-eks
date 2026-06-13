@@ -61,6 +61,17 @@ spec:
             name: innchat-studio-backend-svc
             port:
               number: 80
+      # WebSocket endpoint for the live order / activity views (backend
+      # websocketService.js, path /ws). Without this rule every
+      # wss://apiflows.inncrea.co/ws upgrade 404s at the ALB and the live
+      # views (Producción, Live Activity) show "Desconectado". Do NOT remove.
+      - path: /ws
+        pathType: Prefix
+        backend:
+          service:
+            name: innchat-studio-backend-svc
+            port:
+              number: 80
   - host: api.masivo.inncrea.co
     http:
       paths:
