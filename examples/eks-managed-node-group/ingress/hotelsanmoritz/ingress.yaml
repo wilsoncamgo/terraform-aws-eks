@@ -1,10 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: imporinox-innchat
-  namespace: imporinox
+  name: ingress-hotelsanmoritz
+  namespace: moritz
   annotations:
-    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/target-type: ip
@@ -16,16 +15,28 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-port: '80'
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-1-2021-06
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/8881c828-905d-432a-a60d-02669a421df7
+    alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=30
+    alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:us-east-1:975049889333:certificate/55a6e827-85ec-4b7f-8d38-d7bcf6d2a5cd'
 spec:
+  ingressClassName: alb
   rules:
-  - host: imporinox-chat.innchat.co
+  - host: hotelsanmoritz.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: imporinox-chatwoot
+            name: moritz-web-prod-svc
             port:
-              number: 3000
+              number: 80
+  - host: www.hotelsanmoritz.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: moritz-web-prod-svc
+            port:
+              number: 80

@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: imporinox-innchat
-  namespace: imporinox
+  name: mentes-inncrea
+  namespace: mentes
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -16,16 +16,16 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-port: '80'
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-1-2021-06
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/8881c828-905d-432a-a60d-02669a421df7
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/ada55bff-6b13-4861-9d63-953b46e586d4,arn:aws:acm:us-east-1:975049889333:certificate/bf98004c-85a1-4be2-8f92-d06b1c87c579
 spec:
   rules:
-  - host: imporinox-chat.innchat.co
+  - host: mentes.inncrea.co
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: imporinox-chatwoot
+            name: mentes-chatwoot
             port:
               number: 3000

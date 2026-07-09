@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: imporinox-innchat
-  namespace: imporinox
+  name: chatwoot-glwmx
+  namespace: glwmx
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -13,19 +13,18 @@ metadata:
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/healthcheck-path: /
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
-    alb.ingress.kubernetes.io/healthcheck-port: '80'
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-1-2021-06
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/8881c828-905d-432a-a60d-02669a421df7
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/7ac59956-8592-43a9-b603-bfef5f0eedb1
 spec:
   rules:
-  - host: imporinox-chat.innchat.co
+  - host: chat.glw.mx
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: imporinox-chatwoot
+            name: glwmx-chatwoot
             port:
               number: 3000

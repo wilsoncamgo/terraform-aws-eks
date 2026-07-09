@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: imporinox-innchat
-  namespace: imporinox
+  name: axxia
+  namespace: axxia
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -16,16 +16,46 @@ metadata:
     alb.ingress.kubernetes.io/healthcheck-port: '80'
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-1-2021-06
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/8881c828-905d-432a-a60d-02669a421df7
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/c15e0b15-0d24-4989-add1-0e2799e671fe
 spec:
   rules:
-  - host: imporinox-chat.innchat.co
+  - host: axxialegal.com
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: imporinox-chatwoot
+            name: axxia-site
             port:
-              number: 3000
+              number: 80
+  - host: www.axxialegal.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: axxia-site
+            port:
+              number: 80
+  - host: test.axxialegal.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: axxia-site
+            port:
+              number: 80
+  - host: pagos.axxialegal.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: inncrea-pay-frontend-axxia
+            port:
+              number: 3001

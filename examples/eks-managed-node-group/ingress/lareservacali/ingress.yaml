@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: imporinox-innchat
-  namespace: imporinox
+  name: lareservacali-innchat
+  namespace: lareservacali
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
@@ -19,13 +19,13 @@ metadata:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:975049889333:certificate/8881c828-905d-432a-a60d-02669a421df7
 spec:
   rules:
-  - host: imporinox-chat.innchat.co
+  - host: lareserva-chat.innchat.co
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: imporinox-chatwoot
+            name: lareservacali-chatwoot
             port:
               number: 3000
