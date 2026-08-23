@@ -12,7 +12,7 @@ metadata:
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/healthcheck-path: /
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
-    alb.ingress.kubernetes.io/healthcheck-port: '80'
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-1-2021-06
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
     alb.ingress.kubernetes.io/target-group-attributes: deregistration_delay.timeout_seconds=30
@@ -20,16 +20,9 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-  - host: health.wilsonanca.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: uptime-kuma
-            port:
-              number: 80
+  # health.wilsonanca.com is owned by the default/uptime-kuma ingress now.
+  # durocolor/wphp/pgadmin rules removed 2026-08-01: file had drifted from the
+  # live object (services gone since the AWS separation).
   - host: ntfy.wilsonanca.com
     http:
       paths:
@@ -47,27 +40,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: php-prestashop-durocolor
-            port:
-              number: 80
-  - host: wphp.wilsonanca.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: wp-php-admn
-            port:
-              number: 80
-  - host: pgadmin.wilsonanca.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: pgadmin
+            name: phpmyadmin
             port:
               number: 80
   - host: grafana.wilsonanca.com
